@@ -1,3 +1,4 @@
+
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -6,7 +7,7 @@ const request = require('request');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'dist/content-web')));
-const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
+const contentApiUrl = process.env.CONTENT_API_URL || "http://40.85.162.4:3001";
 
 
 function getSessions(cb) {
@@ -28,7 +29,6 @@ function getSpeakers(cb) {
     cb(null, data);
   });
 }
-
 function stats(cb) {
   request(contentApiUrl + '/stats', function (err, response, body) {
     if (err) {
@@ -55,7 +55,7 @@ app.get('/api/sessions', function (req, res) {
     } else {
       res.send(err);
     }
-  });
+ });
 });
 app.get('/api/stats', function (req, res) {
   stats(function (err, result) {
@@ -67,8 +67,6 @@ app.get('/api/stats', function (req, res) {
     }
   });
 });
-
-
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/content-web/index.html'));
